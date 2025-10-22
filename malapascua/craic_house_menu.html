@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>凯尔特小屋餐厅菜单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'SimSun', serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            color: #333;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #1a3a1a;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-family: 'Palatino', 'SimSun', serif;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        .menu-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+        
+        .section {
+            background: #fafafa;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .section h2 {
+            color: #2c5f2d;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #97bc62;
+        }
+        
+        .section-subtitle {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .menu-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #97bc62;
+        }
+        
+        .menu-item h3 {
+            color: #2c5f2d;
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .item-name {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .chinese-name {
+            font-weight: bold;
+            display: block;
+        }
+        
+        .english-name {
+            font-size: 0.85em;
+            color: #666;
+            font-weight: normal;
+            display: block;
+            margin-top: 3px;
+        }
+        
+        .price {
+            color: #d4a574;
+            font-weight: bold;
+            font-size: 1.1em;
+            white-space: nowrap;
+        }
+        
+        .description {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .note {
+            background: #fff8dc;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #d4a574;
+            font-size: 0.95em;
+            color: #555;
+        }
+        
+        .extras-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+        }
+        
+        .extra-item {
+            background: white;
+            padding: 12px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+        }
+        
+        .extra-name {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .extra-chinese {
+            font-weight: bold;
+            color: #2c5f2d;
+        }
+        
+        .extra-english {
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .footer {
+            background: #2c5f2d;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .menu-content {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            .extras-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>凯尔特小屋餐厅<br>The Craic House</h1>
+            <p>Evolution Resort 妈妈岛进化潜店餐厅</p>
+        </div>
+        
+        <div class="menu-content">
+            <!-- 早餐 -->
+            <div class="section">
+                <h2>☕ 早餐 <span class="section-subtitle">BREAKFAST</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>每天早上7点至10:30供应。所有早餐套餐配一碗新鲜水果。含茶或速溶咖啡。<br>Served every day from 7-10:30 am. All breakfast items come with a bowl of fresh fruit. A mug of tea or instant coffee is included.</em></p>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">煎蛋卷</span>
+                            <span class="english-name">Omelette</span>
+                        </span>
+                        <span class="price">₱400</span>
+                    </h3>
+                    <p class="description">配火腿和/或奶酪、番茄、红洋葱、新鲜香草<br>With ham and/or cheese, tomato, red onion, fresh herbs</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">燕麦粥</span>
+                            <span class="english-name">Oatmeal</span>
+                        </span>
+                        <span class="price">₱250</span>
+                    </h3>
+                    <p class="description">配蜂蜜和新鲜香蕉<br>With honey and fresh banana</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">法式吐司</span>
+                            <span class="english-name">French Toast</span>
+                        </span>
+                        <span class="price">₱400</span>
+                    </h3>
+                    <p class="description">配焦糖香蕉<br>With caramelised banana</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">任意煎蛋</span>
+                            <span class="english-name">Eggs any style</span>
+                        </span>
+                        <span class="price">₱350</span>
+                    </h3>
+                    <p class="description">两个鸡蛋配吐司和黄油，或蒸米饭，可选：火腿、塔西诺、培根、咸牛肉<br>Two eggs with toast & butter or steamed/garlic rice plus your choice of Ham, Tocino, Bacon, Corned Beef</p>
+                </div>
+            </div>
+
+            <!-- 煎饼 -->
+            <div class="section">
+                <h2>🥞 煎饼 <span class="section-subtitle">PANCAKES</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>薄饼风格，全天供应<br>Crêpe style items served all day</em></p>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">黄油/糖浆/砂糖</span>
+                            <span class="english-name">Butter/syrup/sugar</span>
+                        </span>
+                        <span class="price">₱225</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">香蕉</span>
+                            <span class="english-name">Banana</span>
+                        </span>
+                        <span class="price">₱250</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">芒果</span>
+                            <span class="english-name">Mango</span>
+                        </span>
+                        <span class="price">₱250</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">香蕉芒果</span>
+                            <span class="english-name">Banana & Mango</span>
+                        </span>
+                        <span class="price">₱300</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">巧克力酱花生碎</span>
+                            <span class="english-name">Nutella & Crushed Peanuts</span>
+                        </span>
+                        <span class="price">₱275</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">加巧克力酱</span>
+                            <span class="english-name">Add Nutella</span>
+                        </span>
+                        <span class="price">₱60</span>
+                    </h3>
+                </div>
+            </div>
+
+            <!-- 三明治 -->
+            <div class="section">
+                <h2>🍞 三明治 <span class="section-subtitle">SARNIES</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>新鲜现做，配自制面包或炸薯条/配菜沙拉<br>Freshly prepared to order with homemade bread & served with twice fried chips or side salad</em></p>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">凯尔特小屋俱乐部</span>
+                            <span class="english-name">The Craic House Club</span>
+                        </span>
+                        <span class="price">₱385</span>
+                    </h3>
+                    <p class="description">双层烤鸡胸肉、香脆培根、生菜、番茄和蛋黄酱<br>Double decker with grilled chicken breast, crispy bacon, lettuce, tomato and mayo</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">宿醉救星</span>
+                            <span class="english-name">Hangover</span>
+                        </span>
+                        <span class="price">₱385</span>
+                    </h3>
+                    <p class="description">用香脆培根、融化的切达奶酪、煎蛋、墨西哥辣椒和蛋黄酱治愈你的宿醉<br>Fix your hangover with crispy bacon, melted cheddar, fried egg, jalapeños and mayo</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">B.L.T</span>
+                            <span class="english-name">B.L.T</span>
+                        </span>
+                        <span class="price">₱350</span>
+                    </h3>
+                    <p class="description">用蛋黄酱完成这道经典<br>With mayo to complete the classic</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">火腿融化切达奶酪</span>
+                            <span class="english-name">Ham and Melted Cheddar</span>
+                        </span>
+                        <span class="price">₱350</span>
+                    </h3>
+                    <p class="description">简单美味，孩子们的最爱<br>Simple & tasty, a favourite with the kids</p>
+                </div>
+            </div>
+
+            <!-- 卷饼 -->
+            <div class="section">
+                <h2>🌯 卷饼 <span class="section-subtitle">WRAPS</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>所有卷饼配自制炸薯条或配菜沙拉<br>All wraps served with homemade twice fried chips or side salad</em></p>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">早餐卷饼</span>
+                            <span class="english-name">Breakfast Wrap</span>
+                        </span>
+                        <span class="price">₱375</span>
+                    </h3>
+                    <p class="description">培根、炒蛋、奶酪、生菜和番茄<br>Bacon, scrambled egg, cheese, lettuce and tomato</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">泰式鸡肉卷饼</span>
+                            <span class="english-name">Thai Chicken Wrap</span>
+                        </span>
+                        <span class="price">₱400</span>
+                    </h3>
+                    <p class="description">鸡胸肉用红咖喱香料烹制，配黄瓜和茄子<br>Chicken breast cooked in red curry spices with cucumber & aubergine</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">猪肉丸子卷饼</span>
+                            <span class="english-name">Pork Meatball Wrap</span>
+                        </span>
+                        <span class="price">₱400</span>
+                    </h3>
+                    <p class="description">美味肉丸配意式番茄酱<br>Tasty meatballs with Italian style tomato sauce</p>
+                </div>
+            </div>
+
+            <!-- 开胃菜 -->
+            <div class="section">
+                <h2>🍤 开胃菜 <span class="section-subtitle">APPETISERS</span></h2>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">拼盘</span>
+                            <span class="english-name">Mezze Plate</span>
+                        </span>
+                        <span class="price">₱375</span>
+                    </h3>
+                    <p class="description">美味的法拉费、卡拉曼西鹰嘴豆泥、蒜香豆泥莎莎、橄榄和蒜香面包<br>A tasty plate of falafel, kalamansi hummus, pico de gallo salsa, olives & garlic flat bread</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">啤酒面糊洋葱圈</span>
+                            <span class="english-name">Beer Battered Onion Rings</span>
+                        </span>
+                        <span class="price">₱200</span>
+                    </h3>
+                    <p class="description">配菠萝辣椒蘸酱<br>With pinakurat dipping sauce</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">猪肉腰子</span>
+                            <span class="english-name">Pork Lumpia</span>
+                        </span>
+                        <span class="price">₱270</span>
+                    </h3>
+                    <p class="description">配海鲜辣椒蘸酱<br>With hao cham dipping sauce</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">爆米花鸡</span>
+                            <span class="english-name">Popcorn Chicken</span>
+                        </span>
+                        <span class="price">₱300</span>
+                    </h3>
+                    <p class="description">配墨西哥辣椒蛋黄酱<br>With jalapeño mayo</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">香辣鸡翅</span>
+                            <span class="english-name">Spicy Chicken Wings</span>
+                        </span>
+                        <span class="price">₱325</span>
+                    </h3>
+                    <p class="description">配胡萝卜条和蒜香蒜泥蘸酱<br>With carrot sticks and garlic aioli dip</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">培根包虾</span>
+                            <span class="english-name">Bacon Wrapped Shrimp</span>
+                        </span>
+                        <span class="price">₱325</span>
+                    </h3>
+                    <p class="description">配甜辣椒蘸酱<br>With sweet chili dip</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">墨西哥玉米饼</span>
+                            <span class="english-name">Quesadillas</span>
+                        </span>
+                        <span class="price">₱325</span>
+                    </h3>
+                    <p class="description">配切达奶酪、火腿、春洋葱和卡拉曼西莎莎<br>With cheddar cheese, ham, spring onion, and kalamansi salsa</p>
+                </div>
+            </div>
+
+            <!-- 沙拉 -->
+            <div class="section">
+                <h2>🥗 沙拉 <span class="section-subtitle">SALAD</span></h2>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">经典田园沙拉</span>
+                            <span class="english-name">Classic Garden</span>
+                        </span>
+                        <span class="price">₱275</span>
+                    </h3>
+                    <p class="description">配香醋或蜂蜜芥末酱<br>With balsamic vinaigrette or honey mustard dressing</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">传奇沙拉</span>
+                            <span class="english-name">The Legend</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                    <p class="description">烤鸡肉、培根、生菜、番茄、胡萝卜、红洋葱、黄瓜和帕尔马干酪，配香醋<br>Grilled chicken, bacon, lettuce, tomato, carrot, red onion, cucumber and parmesan, tossed in balsamic vinaigrette</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">地中海沙拉</span>
+                            <span class="english-name">Mediterranean</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                    <p class="description">自制墨西哥辣椒法拉费、烤甜椒、茄子、生菜、番茄、胡萝卜和卡拉曼西鹰嘴豆泥，配迷你薄饼<br>Homemade jalapeño falafel, grilled bell pepper, aubergine fingers, lettuce, tomato, carrot and kalamansi hummus on mini flatbreads</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">虾芒沙拉</span>
+                            <span class="english-name">Prawn & Mango</span>
+                        </span>
+                        <span class="price">₱400</span>
+                    </h3>
+                    <p class="description">配蜂蜜芥末酱<br>With honey mustard dressing</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">本地钓线金枪鱼沙拉</span>
+                            <span class="english-name">Locally Line Caught Tuna</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">尼斯沙拉</span>
+                            <span class="english-name">Niçoise</span>
+                        </span>
+                    </h3>
+                    <p class="description">煎金枪鱼排、生菜、番茄、青豆、红洋葱、土豆、鸡蛋、刺山柑和蜂蜜芥末酱<br>Seared tuna steak, lettuce, tomato, green beans, red onion, potato, egg, capers and honey mustard dressing</p>
+                </div>
+            </div>
+
+            <!-- 汉堡 -->
+            <div class="section">
+                <h2>🍔 汉堡 <span class="section-subtitle">BURGERS</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>所有汉堡配自制烤面包，可选薯条或田园沙拉<br>All served on house baked burger buns with a choice of chips or garden salad</em></p>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">香酥鸡肉堡</span>
+                            <span class="english-name">Crispy Chicken Burger</span>
+                        </span>
+                        <span class="price">₱360</span>
+                    </h3>
+                    <p class="description">啤酒面糊炸鸡胸肉，配生菜、番茄和墨西哥辣椒蛋黄酱<br>Beer battered breast with lettuce, tomato & jalapeño mayo</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">猪肉苹果堡</span>
+                            <span class="english-name">Pork & Apple Burger</span>
+                        </span>
+                        <span class="price">₱385</span>
+                    </h3>
+                    <p class="description">多汁猪肉饼配切片苹果、芥末和红洋葱酱<br>Juicy pork patty with sliced apple, mustard and red onion relish</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">香辣金枪鱼堡</span>
+                            <span class="english-name">Spicy Tuna Burger</span>
+                        </span>
+                        <span class="price">₱400</span>
+                    </h3>
+                    <p class="description">新鲜剁碎金枪鱼饼配生菜、番茄和塔塔酱<br>Fresh minced tuna patty with lettuce, tomato and tartare sauce</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">炸鱼堡</span>
+                            <span class="english-name">Fish Burger</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                    <p class="description">啤酒面糊炸西班牙鲭鱼（探戈鱼），配生菜、番茄和塔塔酱<br>Beer battered Spanish mackerel (tangigue), with lettuce, tomato & tartare sauce</p>
+                </div>
+            </div>
+
+            <!-- 意面 -->
+            <div class="section">
+                <h2>🍝 意面 <span class="section-subtitle">PASTA</span></h2>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">奶油鸡肉宽面</span>
+                            <span class="english-name">Linguine Chicken Alfredo</span>
+                        </span>
+                        <span class="price">₱385</span>
+                    </h3>
+                    <p class="description">奶油帕尔马干酪酱<br>Creamy parmesan sauce<br><strong>加炒虾 Add sautéed prawns +₱150</strong></p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">香草鸡肉宽面</span>
+                            <span class="english-name">Linguine Herb Chicken</span>
+                        </span>
+                        <span class="price">₱385</span>
+                    </h3>
+                    <p class="description">橙汁香草烤鸡胸肉<br>Orange infused grilled chicken breast</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">经典芝士通心粉</span>
+                            <span class="english-name">Classic Mac 'n' Cheese</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                    <p class="description">配大蒜猪肉丸<br>With garlic pork meatballs</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">虾仁柠檬南瓜意面</span>
+                            <span class="english-name">Spaghetti Shrimp, Lemon & Squash</span>
+                        </span>
+                        <span class="price">₱450</span>
+                    </h3>
+                    <p class="description">凯尔特小屋最爱的炒虾、南瓜、柠檬汁和橄榄油，撒上帕尔马干酪<br>A Craic House favourite of sautéed shrimp, squash, lemon juice and olive oil topped with parmesan</p>
+                </div>
+            </div>
+
+            <!-- 薯条角 -->
+            <div class="section">
+                <h2>🍟 薯条角 <span class="section-subtitle">CHIP SHOP CORNER</span></h2>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">自制薯条</span>
+                            <span class="english-name">Homemade Chips</span>
+                        </span>
+                        <span class="price">₱150/250</span>
+                    </h3>
+                    <p class="description">普通/大份 两次油炸，岛上最好的！<br>reg/lge Twice fried, the best on the island!</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">芝士薯条</span>
+                            <span class="english-name">Cheesy Chips</span>
+                        </span>
+                        <span class="price">₱225/325</span>
+                    </h3>
+                    <p class="description">普通/大份 撒上融化的切达奶酪<br>reg/lge Smothered in melted cheddar</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">Larry的第十四次</span>
+                            <span class="english-name">Larry the XIVth</span>
+                        </span>
+                        <span class="price">₱450</span>
+                    </h3>
+                    <p class="description">大份、放纵的薯条盘，配融化的切达奶酪、培根、大蒜、洋葱和墨西哥辣椒<br>Large, decadent plate of chips topped with melted cheddar cheese, bacon, garlic, onion, and jalapeño</p>
+                </div>
+            </div>
+
+            <!-- 菲律宾菜 -->
+            <div class="section">
+                <h2>🇵🇭 菲律宾菜 <span class="section-subtitle">FILIPINO</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>所有菜品配白饭或蒜蓉饭<br>All served with your choice of plain or garlic rice</em></p>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">菲律宾酸橘汁腌鱼</span>
+                            <span class="english-name">Kinilaw (Filipino Ceviche)</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                    <p class="description">Tanigue（西班牙鲭鱼）用醋、卡拉曼西汁和盐腌制，配姜、洋葱、辣椒和酸菜，配蒜香面包<br>Tanigue (Spanish mackerel) cured in vinegar, kalamansi juice and salt, with ginger, onion, chili pepper and chillies, served on a garlic tostada</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">猪肉或鸡肉阿多波</span>
+                            <span class="english-name">Pork or Chicken Adobo</span>
+                        </span>
+                        <span class="price">₱385</span>
+                    </h3>
+                    <p class="description">菲律宾最著名的菜！配土豆、胡椒、新鲜辣椒、酱油、醋、胡椒粒和月桂叶<br>The most famous dish of the Philippines! With potato, pepper, fresh chillies, soy, vinegar, peppercorns and bay leaves</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">猪肉或鸡肉 Bicol Express</span>
+                            <span class="english-name">Pork or Chicken Bicol Express</span>
+                        </span>
+                        <span class="price">₱385</span>
+                    </h3>
+                    <p class="description">配辣椒、姜和蔬菜，用香辣奶油椰子汤<br>With chillies, ginger and vegetables in a spicy, creamy coconut broth</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">菲律宾炒素面</span>
+                            <span class="english-name">Filipino Style Stir Fried Vegetable Noodles</span>
+                        </span>
+                        <span class="price">₱285</span>
+                    </h3>
+                    <p class="description">加烤鸡肉或猪肉 ₱100 | 加虾 ₱150<br>Add grilled chicken or pork ₱100 | Add shrimp ₱150</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">鸡肉Tinola/猪肉Nilaga</span>
+                            <span class="english-name">Chicken Tinola/Pork Nilaga</span>
+                        </span>
+                        <span class="price">₱285</span>
+                    </h3>
+                    <p class="description">温暖的菲律宾汤，配鸡肉或猪肉、蔬菜和姜，用瓦罐上桌<br>A warming Filipino broth with chicken or pork, vegetables and ginger served in a claypot</p>
+                </div>
+            </div>
+
+            <!-- 凯尔特小屋经典 -->
+            <div class="section">
+                <h2>⭐ 凯尔特小屋经典 <span class="section-subtitle">CRAIC HOUSE CLASSICS</span></h2>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">煎金枪鱼或Tangigue鱼排</span>
+                            <span class="english-name">Seared Tuna or Tangigue Fillet</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                    <p class="description">配蒜香青豆和奶油土豆泥<br>With garlic green beans and creamy potato mash</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">面包屑鸡肉炸肉排</span>
+                            <span class="english-name">Crumbed Chicken Schnitzel</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                    <p class="description">配迷迭香和蒜香炒土豆、炒蔬菜和卡拉曼西黄油<br>Served with rosemary and garlic sautéed potatoes, sautéed vegetables and kalamansi butter</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">传统啤酒面糊炸鱼薯条</span>
+                            <span class="english-name">Traditional Beer Battered Fish & Chips</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                    <p class="description">配自制凉拌卷心菜和塔塔酱<br>With homemade coleslaw and tartar sauce</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">鸡肉豆塔可</span>
+                            <span class="english-name">Chicken and Bean Tacos</span>
+                        </span>
+                        <span class="price">₱450</span>
+                    </h3>
+                    <p class="description">软面玉米饼、香辣鸡肉、黄瓜、奶酪和蒜香豆泥，配墨西哥饭<br>Soft flour tortillas, spicy chicken, cucumber, cheese and pico de gallo, served with Mexican rice</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">蒜香百里香猪排</span>
+                            <span class="english-name">Garlic Thyme Pork Chop</span>
+                        </span>
+                        <span class="price">₱475</span>
+                    </h3>
+                    <p class="description">配蜂蜜釉胡萝卜和迷迭香蒜香土豆<br>Served with honey glazed carrots and rosemary garlic potatoes</p>
+                </div>
+            </div>
+
+            <!-- 素食菜品 -->
+            <div class="section">
+                <h2>🌱 素食菜品 <span class="section-subtitle">VEGETARIAN</span></h2>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">豆类塔可</span>
+                            <span class="english-name">Bean Tacos</span>
+                        </span>
+                        <span class="price">₱375</span>
+                    </h3>
+                    <p class="description">香料豆泥、生菜、黄瓜和切达奶酪，配三个软玉米饼，搭配墨西哥米饭和蒜香豆泥<br>Spicy beans, lettuce, cucumber and cheddar cheese on three soft flour tortillas, served with Mexican rice and pico de gallo</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">扁豆咖喱</span>
+                            <span class="english-name">Lentil Curry</span>
+                        </span>
+                        <span class="price">₱300</span>
+                    </h3>
+                    <p class="description">印度经典风味，配米饭和恰巴提饼<br>Our take on the Indian classic, served with rice and chapati</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">芝士沙拉三明治</span>
+                            <span class="english-name">Cheese Salad Sandwich</span>
+                        </span>
+                        <span class="price">₱350</span>
+                    </h3>
+                    <p class="description">生菜、番茄、洋葱、切达奶酪和蛋黄酱<br>Lettuce, tomato, onion grated cheddar cheese and mayo</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">素食汉堡</span>
+                            <span class="english-name">Vegetarian Burger</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </h3>
+                    <p class="description">红米和芸豆肉饼，配融化的切达奶酪、生菜、番茄和鹰嘴豆泥<br>Red rice and kidney bean patty with melted cheddar cheese, lettuce, tomato & hummus</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">蒜香辣椒意面</span>
+                            <span class="english-name">Spaghetti Aglio e Olio</span>
+                        </span>
+                        <span class="price">₱300</span>
+                    </h3>
+                    <p class="description">经典橄榄油、大蒜、新鲜帕尔马干酪和辣椒<br>Classic olive oil, garlic, fresh parmesan & chillies</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">渔夫意面</span>
+                            <span class="english-name">Spaghetti Puttanesca</span>
+                        </span>
+                        <span class="price">₱325</span>
+                    </h3>
+                    <p class="description">番茄酱配橄榄、大蒜、茄子和刺山柑，微辣，撒上新鲜帕尔马干酪<br>Marinara sauce with olives, garlic, aubergine & capers, a hint of chilli and fresh grated parmesan</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">墨西哥辣椒法拉费卷饼</span>
+                            <span class="english-name">Jalapeño Falafel Wrap</span>
+                        </span>
+                        <span class="price">₱375</span>
+                    </h3>
+                    <p class="description">自制墨西哥辣椒法拉费配生菜、番茄、黄瓜和卡拉曼西鹰嘴豆泥<br>Homemade jalapeño falafel wrapped with lettuce, tomato, cucumber, kalamansi hummus</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">经典芝士通心粉</span>
+                            <span class="english-name">Classic Mac 'n' Cheese</span>
+                        </span>
+                        <span class="price">₱350</span>
+                    </h3>
+                </div>
+            </div>
+
+            <!-- 甜点 -->
+            <div class="section">
+                <h2>🍨 甜点 <span class="section-subtitle">DESSERT</span></h2>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">圣代冰淇淋</span>
+                            <span class="english-name">Ice Cream Sundae</span>
+                        </span>
+                        <span class="price">₱250</span>
+                    </h3>
+                    <p class="description">冰淇淋配碎饼干和巧克力酱<br>Ice cream topped with crushed cookies and chocolate sauce</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">阿芙佳朵</span>
+                            <span class="english-name">Affogato</span>
+                        </span>
+                        <span class="price">₱275</span>
+                    </h3>
+                    <p class="description">冰淇淋配浓缩咖啡<br>Ice cream topped with a shot of hot espresso</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">炸香蕉</span>
+                            <span class="english-name">Banana Fritters</span>
+                        </span>
+                        <span class="price">₱225</span>
+                    </h3>
+                    <p class="description">配冰淇淋和巧克力酱<br>With ice cream and chocolate sauce</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">芒果漂浮</span>
+                            <span class="english-name">Mango Float</span>
+                        </span>
+                        <span class="price">₱225</span>
+                    </h3>
+                    <p class="description">著名的菲律宾甜点 - 新鲜芒果、全麦饼干和甜奶油<br>A famous Filipino treat - fresh mango, graham crackers and sweet cream</p>
+                </div>
+            </div>
+
+            <!-- 配菜 -->
+            <div class="section">
+                <h2>🍟 配菜 <span class="section-subtitle">EXTRAS</span></h2>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">培根</span>
+                            <span class="extra-english">Bacon</span>
+                        </span>
+                        <span class="price">₱100</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">火腿</span>
+                            <span class="extra-english">Ham</span>
+                        </span>
+                        <span class="price">₱100</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">切达奶酪</span>
+                            <span class="extra-english">Cheddar Cheese</span>
+                        </span>
+                        <span class="price">₱100</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">玉米饼(2片)</span>
+                            <span class="extra-english">Tortilla/Chapati (2 pcs)</span>
+                        </span>
+                        <span class="price">₱95</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">蒜香土豆</span>
+                            <span class="extra-english">Rosemary & Garlic Potato</span>
+                        </span>
+                        <span class="price">₱95</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">辣椒(2片)</span>
+                            <span class="extra-english">Jalapeño Poppers (2 pcs)</span>
+                        </span>
+                        <span class="price">₱100</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">橄榄</span>
+                            <span class="extra-english">Olives</span>
+                        </span>
+                        <span class="price">₱50</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">香酥茄子条</span>
+                            <span class="extra-english">Crispy Aubergine Fingers</span>
+                        </span>
+                        <span class="price">₱95</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">凉拌卷心菜</span>
+                            <span class="extra-english">Coleslaw</span>
+                        </span>
+                        <span class="price">₱95</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">火辣凉拌菜</span>
+                            <span class="extra-english">Craic House Fireslaw</span>
+                        </span>
+                        <span class="price">₱95</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新鲜果汁 -->
+            <div class="section">
+                <h2>🥤 新鲜果汁 <span class="section-subtitle">FRESH FRUIT JUICE</span></h2>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">芒果</span>
+                            <span class="extra-english">Mango</span>
+                        </span>
+                        <span class="price">₱145</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">香蕉</span>
+                            <span class="extra-english">Banana</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">西瓜</span>
+                            <span class="extra-english">Watermelon</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">菠萝</span>
+                            <span class="extra-english">Pineapple</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">苹果</span>
+                            <span class="extra-english">Apple</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">卡拉曼西</span>
+                            <span class="extra-english">Kalamansi</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">卡拉曼西黄瓜</span>
+                            <span class="extra-english">Kalamansi Cucumber</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">混合水果</span>
+                            <span class="extra-english">Mix Fruits</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新鲜果昔 -->
+            <div class="section">
+                <h2>🥤 新鲜果昔 <span class="section-subtitle">FRESH FRUIT SMOOTHIES</span></h2>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">芒果</span>
+                            <span class="extra-english">Mango</span>
+                        </span>
+                        <span class="price">₱160</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">香蕉</span>
+                            <span class="extra-english">Banana</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">西瓜</span>
+                            <span class="extra-english">Watermelon</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">菠萝</span>
+                            <span class="extra-english">Pineapple</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">混合水果</span>
+                            <span class="extra-english">Mix Fruits</span>
+                        </span>
+                        <span class="price">₱175</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 精品咖啡 -->
+            <div class="section">
+                <h2>☕ 精品咖啡 <span class="section-subtitle">PREMIUM COFFEE</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>现磨新鲜咖啡豆<br>Fresh coffee beans brewed to order</em></p>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">鲜煮咖啡</span>
+                            <span class="english-name">Brewed Coffee</span>
+                        </span>
+                        <span class="price">₱125</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">单份浓缩</span>
+                            <span class="english-name">Single Shot Espresso</span>
+                        </span>
+                        <span class="price">₱125</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">双份浓缩</span>
+                            <span class="english-name">Double Espresso</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">拿铁</span>
+                            <span class="english-name">Café Latte</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">卡布奇诺</span>
+                            <span class="english-name">Cappuccino</span>
+                        </span>
+                        <span class="price">₱175</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">摩卡</span>
+                            <span class="english-name">Café Mocha</span>
+                        </span>
+                        <span class="price">₱185</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">美式咖啡</span>
+                            <span class="english-name">Café Americano</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">玛奇朵</span>
+                            <span class="english-name">Café Macchiato</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">爱尔兰咖啡</span>
+                            <span class="english-name">Caffe Gaelach (Irish Coffee)</span>
+                        </span>
+                        <span class="price">₱250</span>
+                    </h3>
+                    <p class="description">配Jameson威士忌。必试！<br>w/ Jameson shot. Must try!</p>
+                </div>
+            </div>
+
+            <!-- 咖啡茶饮 -->
+            <div class="section">
+                <h2>☕ 咖啡&茶 <span class="section-subtitle">COFFEE & TEA</span></h2>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">雀巢咖啡</span>
+                            <span class="extra-english">Nescafe Coffee</span>
+                        </span>
+                        <span class="price">₱80</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">立顿茶</span>
+                            <span class="extra-english">Lipton Tea</span>
+                        </span>
+                        <span class="price">₱85</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">绿茶</span>
+                            <span class="extra-english">Green Tea</span>
+                        </span>
+                        <span class="price">₱85</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">鲜姜茶</span>
+                            <span class="extra-english">Fresh Ginger Brew</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">热Milo巧克力</span>
+                            <span class="extra-english">Hot "Milo" Chocolate</span>
+                        </span>
+                        <span class="price">₱95</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 20px; color: #2c5f2d;">冰饮 ICED</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">冰咖啡</span>
+                            <span class="extra-english">Coffee</span>
+                        </span>
+                        <span class="price">₱85</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">冰茶</span>
+                            <span class="extra-english">Tea</span>
+                        </span>
+                        <span class="price">₱85</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">冰姜茶</span>
+                            <span class="extra-english">Fresh Ginger Brew</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 汽水 -->
+            <div class="section">
+                <h2>🥤 汽水 <span class="section-subtitle">SODAS</span></h2>
+                
+                <h3 style="color: #2c5f2d;">瓶装 237ml / Bottle 237ml</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">可口可乐</span>
+                            <span class="extra-english">Coke</span>
+                        </span>
+                        <span class="price">₱60</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">雪碧</span>
+                            <span class="extra-english">Sprite</span>
+                        </span>
+                        <span class="price">₱60</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 15px; color: #2c5f2d;">罐装 320ml / In Can 320ml</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">零度可乐</span>
+                            <span class="extra-english">Coke Zero</span>
+                        </span>
+                        <span class="price">₱90</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">轻怡可乐</span>
+                            <span class="extra-english">Coke Light</span>
+                        </span>
+                        <span class="price">₱90</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">轻怡雪碧</span>
+                            <span class="extra-english">Sprite Light</span>
+                        </span>
+                        <span class="price">₱90</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">汤力水</span>
+                            <span class="extra-english">Schweppes Tonic</span>
+                        </span>
+                        <span class="price">₱120</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">苏打水</span>
+                            <span class="extra-english">Schweppes Soda</span>
+                        </span>
+                        <span class="price">₱120</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">干姜水</span>
+                            <span class="extra-english">Canada Dry Ginger Ale</span>
+                        </span>
+                        <span class="price">₱125</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 运动饮料 -->
+            <div class="section">
+                <h2>⚡ 运动饮料 <span class="section-subtitle">QUENCHERS</span></h2>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">气泡水 1L</span>
+                            <span class="extra-english">Summit Sparkling Water 1L</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">红牛 250ml</span>
+                            <span class="extra-english">Red Bull (250ml)</span>
+                        </span>
+                        <span class="price">₱165</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">佳得乐 500ml</span>
+                            <span class="extra-english">Gatorade (500ml)</span>
+                        </span>
+                        <span class="price">₱100</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">宝矿力 500ml</span>
+                            <span class="extra-english">Pocari (500ml)</span>
+                        </span>
+                        <span class="price">₱105</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">都乐菠萝汁罐</span>
+                            <span class="extra-english">Dole (Pineapple Juices in a can)</span>
+                        </span>
+                        <span class="price">₱100</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 鸡尾酒 -->
+            <div class="section">
+                <h2>🍹 鸡尾酒 <span class="section-subtitle">COCKTAILS</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>欢乐时光 下午4点至7点。点一杯，我们给您两杯。<br>Happy hour 4pm to 7pm. Order one & we will serve you two.</em></p>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">Scuba Libre</span>
+                            <span class="english-name">Scuba Libre</span>
+                        </span>
+                        <span class="price">₱100</span>
+                    </h3>
+                    <p class="description">朗姆酒和可乐配卡拉曼西汁<br>Rum & Coke w/ kalamansi juice</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">金汤力</span>
+                            <span class="english-name">G&T</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </h3>
+                    <p class="description">金酒和汤力水配黄瓜<br>Gin and tonic water w/ cucumber</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">凯匹林纳</span>
+                            <span class="english-name">Caipirinha</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </h3>
+                    <p class="description">朗姆酒、红糖，配卡拉曼西混合<br>Rum, brown sugar, muddled w/ kalamansi</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">凯匹罗斯卡</span>
+                            <span class="english-name">Caipiroska</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </h3>
+                    <p class="description">伏特加、红糖，配卡拉曼西混合<br>Vodka, brown sugar, muddled w/ kalamansi</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">姜味凯匹林纳</span>
+                            <span class="english-name">Gingerinha</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </h3>
+                    <p class="description">Caipirinha配新鲜姜<br>Caipirinha with fresh ginger kick</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">玛格丽特</span>
+                            <span class="english-name">Margarita</span>
+                        </span>
+                        <span class="price">₱175</span>
+                    </h3>
+                    <p class="description">龙舌兰、三秒酒、卡拉曼西<br>Tequila, triple sec, kalamansi</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">神风特攻队</span>
+                            <span class="english-name">Kamikaze</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </h3>
+                    <p class="description">伏特加、三秒酒、卡拉曼西汁<br>Vodka, triple sec, kalamansi juice</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">德基里酒</span>
+                            <span class="english-name">Daiquiri</span>
+                        </span>
+                        <span class="price">₱185</span>
+                    </h3>
+                    <p class="description">选择新鲜水果（芒果、菠萝或西瓜）配朗姆酒<br>A choice of fresh fruit (mango, pineapple, or watermelon) with rum</p>
+                </div>
+            </div>
+
+            <!-- 啤酒 -->
+            <div class="section">
+                <h2>🍺 啤酒 <span class="section-subtitle">BEER</span></h2>
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">生力淡啤 33cl</span>
+                            <span class="english-name">San Miguel Pale Pilsen 33cl</span>
+                        </span>
+                        <span class="price">₱113</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">生力Light 33cl</span>
+                            <span class="english-name">San Miguel Light 33cl</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">生力风味啤酒 33cl</span>
+                            <span class="english-name">San Miguel Flavored Beer 33cl</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">红马啤酒 50cl</span>
+                            <span class="english-name">Redhorse 50cl</span>
+                        </span>
+                        <span class="price">₱165</span>
+                    </h3>
+                </div>
+            </div>
+
+            <!-- 葡萄酒 -->
+            <div class="section">
+                <h2>🍷 葡萄酒 <span class="section-subtitle">WINE</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>仅整瓶供应<br>per bottle only</em></p>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">梅洛（红）</span>
+                            <span class="english-name">Merlot (Red)</span>
+                        </span>
+                        <span class="price">₱1485</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">赤霞珠（红）</span>
+                            <span class="english-name">Cabernet Sauvignon (Red)</span>
+                        </span>
+                        <span class="price">₱1485</span>
+                    </h3>
+                </div>
+                
+                <div class="menu-item">
+                    <h3>
+                        <span class="item-name">
+                            <span class="chinese-name">长相思（白）</span>
+                            <span class="english-name">Sauvignon Blanc (White)</span>
+                        </span>
+                        <span class="price">₱1680</span>
+                    </h3>
+                </div>
+            </div>
+
+            <!-- 烈酒 -->
+            <div class="section">
+                <h2>🥃 烈酒 <span class="section-subtitle">SPIRITS</span></h2>
+                <p class="description" style="margin-bottom: 15px;"><em>每份45ml<br>(45ml. per shot)</em></p>
+                
+                <h3 style="color: #2c5f2d;">朗姆酒 Rhum</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">House朗姆酒</span>
+                            <span class="extra-english">House Rhum</span>
+                        </span>
+                        <span class="price">₱75</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">摩根船长</span>
+                            <span class="extra-english">Captain Morgan</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">百加得</span>
+                            <span class="extra-english">Bacardi</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">Don Papa</span>
+                            <span class="extra-english">Don Papa</span>
+                        </span>
+                        <span class="price">₱175</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 15px; color: #2c5f2d;">金酒 Gin</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">House金酒</span>
+                            <span class="extra-english">House Gin</span>
+                        </span>
+                        <span class="price">₱100</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">添加利</span>
+                            <span class="extra-english">Tanqueray</span>
+                        </span>
+                        <span class="price">₱200</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">孟买蓝宝石</span>
+                            <span class="extra-english">Bombay Saphire</span>
+                        </span>
+                        <span class="price">₱235</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 15px; color: #2c5f2d;">伏特加 Vodka</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">House伏特加</span>
+                            <span class="extra-english">House Vodka 100</span>
+                        </span>
+                        <span class="price">₱100</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">皇冠</span>
+                            <span class="extra-english">Smirnoff 150</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">绝对</span>
+                            <span class="extra-english">Absolut 185</span>
+                        </span>
+                        <span class="price">₱185</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 15px; color: #2c5f2d;">龙舌兰 Tequila</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">House龙舌兰</span>
+                            <span class="extra-english">House Tequila</span>
+                        </span>
+                        <span class="price">₱120</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">豪帅</span>
+                            <span class="extra-english">Jose Cuervo</span>
+                        </span>
+                        <span class="price">₱180</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 15px; color: #2c5f2d;">调和威士忌 Blended Whiskey</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">缺货</span>
+                            <span class="extra-english">Out of stock</span>
+                        </span>
+                        <span class="price">₱85</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">尊尼获加红牌</span>
+                            <span class="extra-english">JW Red Label</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">尊尼获加黑牌</span>
+                            <span class="extra-english">JW Black Label</span>
+                        </span>
+                        <span class="price">₱185</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">杰克丹尼</span>
+                            <span class="extra-english">Jack Daniels</span>
+                        </span>
+                        <span class="price">₱250</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">J & B</span>
+                            <span class="extra-english">J & B</span>
+                        </span>
+                        <span class="price">₱150</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 15px; color: #2c5f2d;">干邑/白兰地 Cognac / Brandy</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">建达</span>
+                            <span class="extra-english">Fundador</span>
+                        </span>
+                        <span class="price">₱180</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">轩尼诗</span>
+                            <span class="extra-english">Hennessy</span>
+                        </span>
+                        <span class="price">₱425</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 15px; color: #2c5f2d;">利口酒 Liqueur</h3>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">咖啡利口酒</span>
+                            <span class="extra-english">Kahlua</span>
+                        </span>
+                        <span class="price">₱135</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">森布卡</span>
+                            <span class="extra-english">Sambuca</span>
+                        </span>
+                        <span class="price">₱175</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">马里布</span>
+                            <span class="extra-english">Malibu</span>
+                        </span>
+                        <span class="price">₱175</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">百利甜</span>
+                            <span class="extra-english">Baileys</span>
+                        </span>
+                        <span class="price">₱120</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">
+                            <span class="extra-chinese">野格</span>
+                            <span class="extra-english">Jägermeister</span>
+                        </span>
+                        <span class="price">₱200</span>
+                    </div>
+                </div>
+                
+                <div class="note" style="margin-top: 20px;">
+                    <strong>🎉 有什么值得庆祝的吗？<br>GOT SOMETHING TO CELEBRATE?</strong><br>
+                    摇响我们著名的铃铛，为酒吧里的所有人买一轮酒，我们会和您一起庆祝。<br>
+                    Then ring our famous bell & buy a round for everyone in the bar, we'll celebrate with you.
+                </div>
+            </div>
+        </div>
+        
+        <div class="note">
+            <strong>📋 温馨提示 / Note:</strong><br>
+            马拉帕斯卡是一个偏远地区，有些食材并不总是能买到，请多多包涵！如果您有任何食物过敏或特殊要求，请告知我们的工作人员。<br>
+            Malapascua is a remote location, and some ingredients are not always available, so please be nice! Also, please let our Craic Dealers know if you have any food allergies or requests.
+        </div>
+        
+        <div class="footer">
+            <h3>🎉 查看黑板了解每日特餐！<br>CHECK OUR BLACKBOARDS FOR SPECIALS!</h3>
+            <p style="margin-top: 15px;">
+                我们可以为您安排"家庭式"聚餐、烧烤、生日派对等活动<br>
+                We can arrange 'family style' meals, BBQs, birthday events and much more for you.<br>
+                请咨询我们友好的工作人员了解详情！<br>
+                Ask one of our friendly Craic Dealers for details!
+            </p>
+        </div>
+    </div>
+</body>
+</html>
